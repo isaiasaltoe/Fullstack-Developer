@@ -49,3 +49,9 @@
 # Ignore Docker-related files
 /.dockerignore
 /Dockerfile*
+
+pgdata
+log
+tmp
+node_modules
+.git
