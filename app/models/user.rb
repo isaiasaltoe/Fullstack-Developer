@@ -9,9 +9,13 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true
   validates :role, inclusion: { in: %w[user admin] }
 
+  enum :role, { user: 0, admin: 1 }, default: :user
+
+
   has_one_attached :avatar_image
 
   after_initialize :set_default_role, if: :new_record?
+
 
   private
 
