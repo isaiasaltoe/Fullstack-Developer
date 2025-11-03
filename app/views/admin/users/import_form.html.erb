@@ -1,12 +1,12 @@
-<h1>Importar Usuários</h1>
+<h1>Import Users</h1>
 
 <%= form_with url: import_admin_users_path, local: true, html: { multipart: true } do |f| %>
   <div>
-    <%= f.label :file, "Escolha o arquivo CSV ou XLSX" %>
+    <%= f.label :file, "Choose the file, CSV or XLSX" %>
     <%= f.file_field :file %>
   </div>
 
   <div style="margin-top: 10px;">
-    <%= f.submit "Importar", class: "button" %>
+    <%= f.submit "Import", class: "button" %>
   </div>
 <% end %>

@@ -1,5 +1,15 @@
 module Admin
   class UsersController < Admin::ApplicationController
+    
+    def index
+      super
+
+     
+      @users_count = User.count
+      @admins_count = User.admin.count
+      @normal_users_count = User.user.count
+    end
+
     def scoped_resource
       User.all
     end
