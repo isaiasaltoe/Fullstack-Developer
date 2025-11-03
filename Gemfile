@@ -58,11 +58,6 @@ group :development do
   gem "web-console"
 end
 
-group :test do
-  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem "capybara"
-  gem "selenium-webdriver"
-end
 
 gem "devise", "~> 4.9"
 
@@ -73,3 +68,13 @@ gem "pry"
 gem "roo"
 
 gem "csv", "~> 3.3"
+
+
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+  gem 'faker'
+  gem 'capybara'
+  gem 'database_cleaner-active_record'
+  gem 'shoulda-matchers'
+end
