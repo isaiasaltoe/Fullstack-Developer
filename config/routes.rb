@@ -9,11 +9,17 @@ Rails.application.routes.draw do
 
   # Painel admin (usando Administrate)
   namespace :admin do
-    resources :users
+    resources :users do
+      collection do
+        get :import_form    # formulário de importação
+        post :import        # processa a importação
+      end
+    end
+
     root to: "users#index"  # Página inicial do painel admin
   end
 
-  # Outras páginas simples (se existirem)
+  # Outras páginas simples
   get "pages/users"
   get "pages/admin"
 

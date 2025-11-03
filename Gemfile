@@ -69,3 +69,7 @@ gem "devise", "~> 4.9"
 gem "administrate", "~> 1.0"
 
 gem "pry"
+
+gem "roo"
+
+gem 'csv', '~> 3.3'
