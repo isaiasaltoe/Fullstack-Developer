@@ -12,7 +12,7 @@ class ActiveStorage::AttachmentDashboard < Administrate::BaseDashboard
     blob: Field::BelongsTo,
     name: Field::String,
     record: Field::Polymorphic,
-    created_at: Field::DateTime,
+    created_at: Field::DateTime
   }.freeze
 
   # COLLECTION_ATTRIBUTES

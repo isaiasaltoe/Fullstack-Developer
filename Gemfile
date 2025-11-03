@@ -72,4 +72,4 @@ gem "pry"
 
 gem "roo"
 
-gem 'csv', '~> 3.3'
+gem "csv", "~> 3.3"

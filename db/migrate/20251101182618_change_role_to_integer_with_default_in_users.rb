@@ -1,35 +1,26 @@
 class ChangeRoleToIntegerWithDefaultInUsers < ActiveRecord::Migration[7.1]
   def up
+    # cria coluna temporária
+    add_column :users, :role_tmp, :integer, default: 0
 
-    execute <<~SQL
-      ALTER TABLE users
-      ALTER COLUMN role DROP DEFAULT;
-    SQL
+    # copia os valores convertendo
+    User.reset_column_information
+    User.find_each do |u|
+      u.update_column(:role_tmp, u.role == 'admin' ? 1 : 0)
+    end
 
-    execute <<~SQL
-      ALTER TABLE users
-      ALTER COLUMN role TYPE integer
-      USING CASE role WHEN 'admin' THEN 1 ELSE 0 END;
-    SQL
-
-    execute <<~SQL
-      ALTER TABLE users
-      ALTER COLUMN role SET DEFAULT 0;
-    SQL
+    # remove coluna antiga e renomeia a temporária
+    remove_column :users, :role
+    rename_column :users, :role_tmp, :role
   end
 
   def down
-
-    
-    execute <<~SQL
-      ALTER TABLE users
-      ALTER COLUMN role DROP DEFAULT;
-    SQL
-
-    execute <<~SQL
-      ALTER TABLE users
-      ALTER COLUMN role TYPE varchar
-      USING CASE role WHEN 1 THEN 'admin' ELSE 'user' END;
-    SQL
+    add_column :users, :role_tmp, :string, default: 'user'
+    User.reset_column_information
+    User.find_each do |u|
+      u.update_column(:role_tmp, u.role == 1 ? 'admin' : 'user')
+    end
+    remove_column :users, :role
+    rename_column :users, :role_tmp, :role
   end
 end

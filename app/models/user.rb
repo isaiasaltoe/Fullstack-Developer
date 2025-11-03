@@ -4,7 +4,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   # Active Storage
-  
+
 
   validates :username, presence: true, uniqueness: true
   validates :role, inclusion: { in: %w[user admin] }
@@ -20,7 +20,7 @@ class User < ApplicationRecord
   private
 
   def set_default_role
-    self.role ||= 'user'
+    self.role ||= "user"
   end
 
   def email_required?

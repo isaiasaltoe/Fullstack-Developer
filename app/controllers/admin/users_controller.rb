@@ -1,6 +1,5 @@
 module Admin
   class UsersController < Admin::ApplicationController
-    
     def scoped_resource
       User.all
     end
@@ -29,32 +28,28 @@ module Admin
 
     def import_form; end
 
-    def import
-      if params[:file].blank?
-        redirect_to import_form_admin_users_path, alert: "Por favor, envie um arquivo."
-        return
-      end
-
-      spreadsheet = Roo::Spreadsheet.open(params[:file].path)
-      header = spreadsheet.row(1)
-
-      success_count = 0
-      errors = []
-
-      (2..spreadsheet.last_row).each do |i|
-        row_data = Hash[[header, spreadsheet.row(i)].transpose]
-        user = User.new(username: row_data["username"], password: row_data["password"])
-        if user.save
-          success_count += 1
-        else
-          errors << "Linha #{i}: #{user.errors.full_messages.join(', ')}"
-          Rails.logger.error(errors.last)
-        end
-      end
-
-      notice = "Importação concluída! #{success_count} usuários criados."
-      notice += " Erros: #{errors.join('; ')}" if errors.any?
-      redirect_to admin_users_path, notice: notice
+    def progress
+      @progress = ImportProgress.find(params[:progress_id])
     end
+
+
+def import
+   Rails.logger.info "Iniciando import"
+
+  if params[:file].blank?
+    redirect_to import_form_admin_users_path, alert: "Por favor, envie um arquivo."
+    return
+  end
+
+  tmp_path = Rails.root.join("tmp", params[:file].original_filename)
+  File.open(tmp_path, "wb") { |f| f.write(params[:file].read) }
+
+  progress = ImportProgress.create!(status: :running, total: 0, processed: 0)
+  Rails.logger.info "Progress criado: #{progress.inspect}"
+
+  UserImportJob.perform_later(tmp_path.to_s, progress.id)
+
+  redirect_to progress_admin_users_path(progress_id: progress.id)
+end
   end
 end
