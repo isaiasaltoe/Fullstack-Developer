@@ -78,3 +78,5 @@ group :development, :test do
   gem 'database_cleaner-active_record'
   gem 'shoulda-matchers'
 end
+
+gem "image_processing", "~> 1.12"
