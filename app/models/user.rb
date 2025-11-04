@@ -8,6 +8,7 @@ class User < ApplicationRecord
 
   validates :username, presence: true, uniqueness: true
   validates :role, inclusion: { in: %w[user admin] }
+  validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
 
   enum :role, { user: 0, admin: 1 }, default: :user
 
@@ -21,13 +22,5 @@ class User < ApplicationRecord
 
   def set_default_role
     self.role ||= "user"
-  end
-
-  def email_required?
-    false
-  end
-
-  def will_save_change_to_email?
-    false
   end
 end

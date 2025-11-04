@@ -3,6 +3,9 @@
   <p class="text-muted text-center mb-4">
     Upload a <strong>CSV</strong> or <strong>XLSX</strong> file containing user data to import them into the system.
   </p>
+  <p class="text-muted text-center mb-2">
+    Expected columns in the first row: <code>username</code>, <code>password</code>, <code>email</code>.
+  </p>
 
   <%= form_with url: import_admin_users_path, local: true, html: { multipart: true, class: "needs-validation" } do |f| %>
     <div class="mb-3">

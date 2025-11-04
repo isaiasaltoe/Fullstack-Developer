@@ -16,7 +16,7 @@ module Admin
     end
 
     def resource_params
-      params.require(:user).permit(:username, :role, :password, :password_confirmation, :avatar_image)
+      params.require(:user).permit(:username, :email, :role, :password, :password_confirmation, :avatar_image)
     end
 
     def update_resource(resource, attributes)

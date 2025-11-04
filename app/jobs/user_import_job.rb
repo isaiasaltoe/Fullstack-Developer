@@ -11,7 +11,7 @@ class UserImportJob < ApplicationJob
 
     (2..spreadsheet.last_row).each do |i|
       row_data = Hash[[ header, spreadsheet.row(i) ].transpose]
-      user = User.new(username: row_data["username"], password: row_data["password"])
+      user = User.new(username: row_data["username"], email: row_data["email"], password: row_data["password"])
 
       if user.save
         progress.increment!(:processed)
