@@ -9,7 +9,7 @@
 #   end
 
 User.create!(
-  full_name: "Admin User",
+  username: "Admin User",
   password: "123456",
   role: "admin"
 )
