@@ -1,6 +1,7 @@
 module Admin
   class UsersController < Admin::ApplicationController
-    
+    layout "admin_custom", only: [:import_form]
+
     def index
       super
 
